@@ -37,7 +37,8 @@ from app_models import app_db
 
 from routes import (
     r_admin, 
-    r_users
+    r_users, 
+    r_articles
 )
 
 # ---------------------------------------------------------------
@@ -52,6 +53,7 @@ SECRET_HEADER = "SECRET_VAL" # this has to be sent over as SECRET-HEADER -> SECR
 # make fapi obj
 ep_obj = FastAPI()
 ep_obj.include_router(r_users.router)
+ep_obj.include_router(r_articles.router)
 ep_obj.include_router(r_admin.router)
 
 # ---------------------------------------------------------------

@@ -4,6 +4,7 @@ uvicorn
 pytest
 pytest-asyncio
 fastapi[all]
+fastapi-utils
 httpie
 databases[postgresql]
 pymongo

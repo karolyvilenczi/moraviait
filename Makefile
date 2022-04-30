@@ -94,6 +94,9 @@ ps:
 df:
 	docker system df
 
+create_net_dev:
+	docker network create dev
+
 # --------------------------------------
 # prune, purge
 

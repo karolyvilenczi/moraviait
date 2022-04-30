@@ -4,4 +4,7 @@
 # 'import app_models' instead
 # 'from app_models import m_users'
 
-from . import m_users
+from . import (
+    m_articles, 
+    m_users
+)

@@ -57,15 +57,14 @@ services:
     ports:
      - 5432:5432
     volumes:
-      - ./postgres/db_data:/data/db_postgres
-      - ./postgres/init_db:/docker-entrypoint-initdb.d/
-      # - ./postgres/sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      # - ./postgres/sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
-      # - postgres_server_data:/data/db_postgres
+      # - ./postgres/db_data:/data/db_postgres
+      # - ./postgres/init_db:/docker-entrypoint-initdb.d/
+      - ./postgres/init_db/01-init.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - postgres_server_data:/data/db_postgres:rw
     
-# volumes:
-#   mongodb_server_data:
-#   postgres_server_data:
+volumes:
+  mongodb_server_data:
+  postgres_server_data:
 
 networks:
   default:
