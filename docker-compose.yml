@@ -1,0 +1,73 @@
+# docker-compose.yml
+
+version: '3.7'
+
+services:
+  srv_fastapi:
+    # image: img_fapi:kvilenczi
+    build: 
+      context: ${PWD}/fastapi_app
+      dockerfile: Dockerfile.dev
+    env_file:
+      # - ./fastapi_app/srv_fastapi.env
+      - ./.env
+    container_name: cont_fastapi_app
+    volumes:
+     - ./fastapi_app/app:/home/app_user/app
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - srv_postgres
+      # - srv_mongodb
+
+  # srv_redis:
+  #   # build: 
+  #     # context: ${PWD}/redis
+  #   image: "redis:${REDIS_VERSION}"
+  #   container_name: cont_redis
+  #   env_file:
+  #     - ./redis/srv_redis.env
+
+  # srv_mongodb:
+  #   image: "mongo:${MONGODB_VERSION}"
+  #   container_name: cont_mongodb
+  #   env_file:
+  #     - ./mongodb/srv_mongodb.env
+  #   volumes:
+  #     - mongodb_server_data:/data/db
+  #     - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+
+
+  srv_postgres:
+    # build: 
+      # context: ${PWD}/postgres
+    image: "postgres:${POSTGRES_IMAGE_VERSION}"
+    container_name: cont_postgres
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    restart: always
+    env_file:
+      # - ./postgres/srv_postgres.env
+      - ./.env
+    ports:
+     - 5432:5432
+    volumes:
+      - ./postgres/db_data:/data/db_postgres
+      - ./postgres/init_db:/docker-entrypoint-initdb.d/
+      # - ./postgres/sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+      # - ./postgres/sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
+      # - postgres_server_data:/data/db_postgres
+    
+# volumes:
+#   mongodb_server_data:
+#   postgres_server_data:
+
+networks:
+  default:
+    external:
+      name: dev
