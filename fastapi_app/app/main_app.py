@@ -10,8 +10,7 @@ from typing import (
     Optional
 )
 
-
-# 3rd party imports
+# imports for FastAPI and related
 from fastapi import (
     FastAPI, 
     Depends, 
@@ -23,18 +22,28 @@ from fastapi import (
     status
 )
 
+# for the repeated tasks- while the server is running
+from fastapi_utils.tasks import (
+    repeat_every
+)
+
 # to handle DB management w. the databases libr
 import sqlalchemy as sa
 
 
 # ---------------------------------------------------------------
 # import db management module
+from app_models import (
+    app_db
+)
 
-from app_models import app_db
+# import scraping module
+from app_runners import (
+    scrape
+)
 
 # ---------------------------------------------------------------
 # import routes
-
 from routes import (
     r_admin, 
     r_users, 
@@ -45,6 +54,7 @@ from routes import (
 # init api token
 #API_TOKEN = "SECRET API TOKEN"
 SECRET_HEADER = "SECRET_VAL" # this has to be sent over as SECRET-HEADER -> SECRET_VAL
+SCRAPING_FREQ = int(os.environ.get('SCRAPING_FREQUENCY_SECONDS'))
 
 # ---------------------------------------------------------------
 # dependencies
@@ -62,10 +72,15 @@ ep_obj.include_router(r_admin.router)
 @ep_obj.on_event("startup")
 async def startup():    
     print(f"----> Starting up:")
+    print(f"----> Scraping frequency is set to {SCRAPING_FREQ} seconds.")
     print(f"----> Calling DB connect()...")    
     await app_db.db.connect()
-    
 
+@ep_obj.on_event("startup")
+@repeat_every(seconds=SCRAPING_FREQ) 
+async def run_scraper() -> None:    
+    print(f"########## JUST RAN SCRAPER: {await scrape.run_scraper()}")
+    
 
 @ep_obj.on_event("shutdown")
 async def startup():    
@@ -77,10 +92,10 @@ async def startup():
 
 # ===============================================================
 if __name__ == "__main__":
-    msg = "App started directly"    
+    msg = "MAIN APP started directly"    
     print(msg)
     # print(sys.path)
 else:
-    msg = "App started as a module."
+    msg = "MAIN APP started as a module."
     print(msg)
     # print(sys.path)

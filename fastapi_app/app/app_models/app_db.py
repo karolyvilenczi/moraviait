@@ -13,7 +13,7 @@ DATABASE_URL_ASYNC=f"postgresql+asyncpg://{APP_DB_USER}:{APP_DB_PASS}@{DATABASE_
 # used to play with sa from ipython
 DATABASE_URL=f"postgresql+psycopg2://{APP_DB_USER}:{APP_DB_PASS}@{DATABASE_SERVICE_NAME}:5432/{APP_DB_NAME}"
 
-print(DATABASE_URL_ASYNC)
+print(f"{__name__}: Using DB Conn str: {DATABASE_URL_ASYNC=}")
 
 db = databases.Database(DATABASE_URL_ASYNC)
 metadata = sa.MetaData()

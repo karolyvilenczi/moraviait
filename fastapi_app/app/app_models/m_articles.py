@@ -144,6 +144,6 @@ class ArticleCRUD:
             
             # flatten the resp_list
             resp_one_list = list(chain(*resp_list))
-            print(resp_one_list)
+            # print(resp_one_list)
         
         return resp_one_list
