@@ -20,3 +20,4 @@ ipython
 requests
 beautifulsoup4
 python-dateutil
+lxml
