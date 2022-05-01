@@ -79,8 +79,27 @@ async def startup():
 @ep_obj.on_event("startup")
 @repeat_every(seconds=SCRAPING_FREQ) 
 async def run_scraper() -> None:    
-    print(f"########## JUST RAN SCRAPER: {await scrape.run_scraper()}")
+    url = "https://www.idnes.cz/"
+    css_logic = "h3:is(.art h3)"
+
+    scrape_res = await scrape.run_scraper_for( 
+        url = url, selector_logic = css_logic
+    )
     
+    print(f"########## SCRAPER FOR {url}: {scrape_res}")
+
+@ep_obj.on_event("startup")
+@repeat_every(seconds=SCRAPING_FREQ) 
+async def run_scraper() -> None:    
+    url = "https://www.bbc.com/"
+    css_logic = "a:is(.media__link)"
+
+    scrape_res = await scrape.run_scraper_for( 
+        url = url, selector_logic = css_logic
+    )
+    
+    print(f"########## SCRAPER FOR {url}: {scrape_res}")
+
 
 @ep_obj.on_event("shutdown")
 async def startup():    

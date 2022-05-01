@@ -18,6 +18,8 @@ sqlmodel
 alembic
 ipython
 requests
+html5lib
 beautifulsoup4
+soupsieve
 python-dateutil
 lxml
