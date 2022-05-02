@@ -1,6 +1,6 @@
 
 Kedze mi bolo umoznene si zvolit iny framework, resp. postup a kedze 
-som chapal zmysel (aj) demonstrovat sposob rozmyslania a schopnosti fo FastaPI som sa rozhodol 
+som chapal zmysel zadania (aj) demonstrovat sposob rozmyslania a schopnosti pouzit FastaPI som sa rozhodol 
 upravit riesenie ktore som pouzival ked som sa ucil z knihy:
 
 Building Data Science Applications with FastAPI
@@ -24,9 +24,6 @@ Nedostatky:
 
 - ..a nie je ziaden session control a security.
 Tak mi to zatial dufam odpustite. :)
-
-Tesim sa na feedback.
-KV
 
 
 # TO start up in a new environment.:
@@ -103,3 +100,7 @@ curl --location --request DELETE 'http://127.0.0.1:8000/article/5' \
     "last_name": "Parkerovics",
     "age":25
 }'
+
+
+Tesim sa na feedback.
+KV
