@@ -3,7 +3,6 @@
 import os
 # import sys
 
-
 from typing import (
     Tuple, 
     List, 
@@ -29,7 +28,6 @@ from fastapi_utils.tasks import (
 
 # to handle DB management w. the databases libr
 import sqlalchemy as sa
-
 
 # ---------------------------------------------------------------
 # import db management module

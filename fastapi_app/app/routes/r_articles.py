@@ -111,7 +111,6 @@ async def create_article(article:app_schema.ArticleSchema):
 
 # -----------------------------
 # search for articles based on keywords
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @router.post("/find")
 async def search_for_kw_in_articles(payload:app_schema.KeywordSchema):
     
