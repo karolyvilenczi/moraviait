@@ -27,7 +27,6 @@ import app_models
 from app_models import app_db
 target_metadata = app_db.metadata
 
-
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")

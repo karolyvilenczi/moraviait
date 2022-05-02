@@ -9,7 +9,7 @@ from yaml import parse
 
 # from lxml import etree
 
-from app_models.m_articles import ArticleCRUD
+from app_models import m_articles
 
 # ---------------------------------------------------------------
 
@@ -36,16 +36,24 @@ async def parse_content(content:str = None, css_selector_logic:str = None):
 
 # ---------------------------------------------------------------
 async def run_scraper_for(url:str = None, selector_logic:str = None):
-    # resp = await ArticleCRUD.get_all()
-
-    # URL = "https://www.idnes.cz/"
-    # SELECTOR_LOGIC = 'h3:is(.art h3)'
 
     content = await get_page_content(url = url)
-    results = await parse_content(content=content, css_selector_logic = selector_logic)
+    results_headline_list = await parse_content(content=content, css_selector_logic = selector_logic)
 
-    # print(results)
-    return results
+
+    for headline in results_headline_list:
+        art_dict = {
+            "url": url, 
+            "text": headline
+        }
+
+        article_id = await m_articles.ArticleCRUD.create(**art_dict)
+
+    resp = {
+        f"number of articles inserted for {url}": len(results_headline_list)
+    }
+    # print(article_id)
+    return resp
 
     
     

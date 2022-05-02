@@ -8,12 +8,15 @@
 4.1. run 'make alembic_init'
 
 In the generated migrations folder configure:
-- in env.py:
-
+- in env.py
+1. comment out '# target_metadata = None'
+2. insert the following lines (between the # ---)
+# -----------------------------------
 import app_models
 
 from app_models import app_db
 target_metadata = app_db.metadata
+# -----------------------------------
 
 - in alebic.ini:
 add: 'sqlalchemy.url=postgresql+asyncpg://scraper_user:scraper_pass@srv_postgres:5432/scraper'

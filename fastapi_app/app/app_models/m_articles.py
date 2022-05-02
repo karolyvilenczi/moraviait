@@ -81,7 +81,8 @@ class ArticleCRUD:
     async def create(cls, **article):
         resp = None
         
-        query = articles.insert().values(**article)
+        query = articles.insert().values(**article)        
+        # print(f"About to exec: {query}")
         
         try:
             resp_article_id = await app_db.db.execute(query)

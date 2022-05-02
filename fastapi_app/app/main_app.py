@@ -68,7 +68,7 @@ ep_obj.include_router(r_admin.router)
 
 # ---------------------------------------------------------------
 # startup and shutdown events
-
+# -----------------------------
 @ep_obj.on_event("startup")
 async def startup():    
     print(f"----> Starting up:")
@@ -76,6 +76,7 @@ async def startup():
     print(f"----> Calling DB connect()...")    
     await app_db.db.connect()
 
+# -----------------------------
 @ep_obj.on_event("startup")
 @repeat_every(seconds=SCRAPING_FREQ) 
 async def run_scraper() -> None:    
@@ -86,8 +87,9 @@ async def run_scraper() -> None:
         url = url, selector_logic = css_logic
     )
     
-    print(f"########## SCRAPER FOR {url}: {scrape_res}")
+    print(f"SCRAPER STAT: {scrape_res}")
 
+# -----------------------------
 @ep_obj.on_event("startup")
 @repeat_every(seconds=SCRAPING_FREQ) 
 async def run_scraper() -> None:    
@@ -98,9 +100,9 @@ async def run_scraper() -> None:
         url = url, selector_logic = css_logic
     )
     
-    print(f"########## SCRAPER FOR {url}: {scrape_res}")
+    print(f"SCRAPER STAT: {scrape_res}")
 
-
+# -----------------------------
 @ep_obj.on_event("shutdown")
 async def startup():    
     print(f"----> Shutting down up:")
