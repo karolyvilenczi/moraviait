@@ -3,7 +3,9 @@ DB_USER = scraper_user
 DB_PASS = scraper_pass
 DB_NAME = scraper
 
+# --------------------------------------
 # alembic init
+
 alembic_init:
 	docker-compose exec srv_fastapi alembic init -t async migrations
 
@@ -19,12 +21,10 @@ alembic_migrate:
 # --------------------------------------
 # up
 
-
 up_all:
 	docker-compose up
 
 reinit_migrations: up_all alembic_init
-	
 
 up_all_d:
 	docker-compose up -d
@@ -55,6 +55,7 @@ log_follow_mongo:
 log_follow_postgres:
 	docker-compose logs -f srv_postgres
 
+
 # --------------------------------------
 # build
 
@@ -69,6 +70,7 @@ rebuild_all: build up_all_d logs
 
 # --------------------------------------
 # enter
+
 enter_mongo:
 	docker exec -it cont_mongodb mongosh -u fapi_user -p fapi_pass --authenticationDatabase db_fapi
 
@@ -78,12 +80,17 @@ enter_postgres_bash:
 enter_postgres_cli:
 	docker exec -it cont_postgres psql -d $(DB_NAME) -U $(DB_USER)
 
-enter_fapi:
-	docker-compose run --rm  srv_fastapi bash
+enter_fapi_bash:
+	docker-compose exec srv_fastapi /bin/bash
 
 enter_fapi_ipython_postgres:
-	docker-compose run --rm  srv_fastapi ipython -i ipython/create_orm_session.py 
+	docker-compose exec srv_fastapi ipython -i ipython/create_orm_session.py 
 
+# --------------------------------------
+# run pytest
+
+run_pytest:
+	docker-compose exec srv_fastapi pytest -v -s
 
 # --------------------------------------
 # utils
